@@ -1,6 +1,7 @@
 import { chromium, expect } from "@playwright/test";
 
-const url = "http://127.0.0.1:4174/portofolio_indra/";
+const url =
+  process.env.PAGES_TEST_URL || "http://127.0.0.1:4174/portofolio_indra/";
 const browser = await chromium.launch({
   executablePath:
     process.env.CHROME_PATH ||

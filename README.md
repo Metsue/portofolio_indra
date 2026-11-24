@@ -4,7 +4,7 @@ Portofolio bertema dark purple, dibangun dengan **Laravel 13 + React 19 + TypeSc
 
 ## Website publik di GitHub Pages
 
-Repository: `https://github.com/Metsue/portofolio_indra`. Alamat publik: `https://metsue.github.io/portofolio_indra/` setelah deployment GitHub Pages berhasil. Workflow `.github/workflows/pages.yml` membangun dan menerbitkan situs pada setiap push ke `main`. Di **Settings → Pages**, sumber deployment harus **GitHub Actions**. Build lokal untuk memeriksa versi publik: `npm.cmd run build:pages`; hasil berada di `dist-pages/` dan tidak ikut masuk Git.
+Repository: `https://github.com/Metsue/portofolio_indra`. Alamat publik: `https://metsue.github.io/portofolio_indra/`. Workflow `.github/workflows/pages.yml` membangun dan menerbitkan situs pada setiap push ke `main`. Di **Settings → Pages**, sumber deployment adalah **GitHub Actions**. Build lokal untuk memeriksa versi publik: `npm.cmd run build:pages`; hasil berada di `dist-pages/` dan tidak ikut masuk Git. Untuk menguji situs yang sudah online, jalankan `$env:PAGES_TEST_URL='https://metsue.github.io/portofolio_indra/'; node scripts/pages-browser-qa.mjs`.
 
 GitHub Pages hanya melayani file statis. Karena itu versi publik menggunakan navigasi berbasis hash agar halaman detail proyek bisa dibuka ulang, contact melalui `mailto:` dan Instagram, serta panel ajakan kolaborasi sebagai pengganti guestbook Laravel. Guestbook yang menyimpan komentar tetap ada pada versi Laravel lokal; untuk mengaktifkannya di internet dibutuhkan hosting backend terpisah. Aset foto dan sertifikat di `public/assets/` memang ikut diterbitkan sebagai bagian portofolio publik.
 

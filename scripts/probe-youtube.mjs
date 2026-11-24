@@ -1,0 +1,4 @@
+import {chromium} from '@playwright/test';
+const b=await chromium.launch({executablePath:'C:/Program Files/Google/Chrome/Application/chrome.exe'}),p=await b.newPage();await p.goto('http://localhost/portofolio_indra/public/');await p.waitForTimeout(1200);await p.getByRole('button',{name:'Putar Tarot',exact:true}).click();await p.waitForTimeout(7000);
+for(const f of p.frames()){if(f.url().includes('youtube')){console.log('FRAME',f.url());console.log(await f.evaluate(()=>({title:document.title,text:document.body.innerText.slice(0,300),videos:[...document.querySelectorAll('video')].map(v=>({time:v.currentTime,duration:v.duration,paused:v.paused,ready:v.readyState,muted:v.muted,error:v.error?.message})),images:[...document.images].map(i=>({src:i.src.slice(0,100),width:i.naturalWidth})).slice(0,2)})));}}
+await b.close();

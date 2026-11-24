@@ -1,0 +1,7 @@
+Options -Indexes
+RewriteEngine On
+RewriteRule ^dist(?:/.*)?$ /portofolio_indra/public/ [R=302,L]
+RewriteRule ^(?:public/|index\.php$) - [L]
+RewriteRule ^$ index.php [L]
+RewriteRule . - [F,L]
+DirectoryIndex index.php

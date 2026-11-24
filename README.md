@@ -1,6 +1,12 @@
 ﻿# Muhammad Indra — Portfolio
 
-Portofolio lokal bertema dark purple, dibangun dengan **Laravel 13 + React 19 + TypeScript + Vite**. Layout mengikuti referensi video: navbar pill, hero dengan kartu identitas menggantung, About, pendidikan/pengalaman, statistik, listening room, portfolio bertab, detail proyek, sertifikat, dan contact.
+Portofolio bertema dark purple, dibangun dengan **Laravel 13 + React 19 + TypeScript + Vite**. Versi Laravel berjalan lokal; versi statis untuk GitHub Pages dibangun dari frontend yang sama. Layout mengikuti referensi video: navbar pill, hero dengan kartu identitas menggantung, About, pendidikan/pengalaman, statistik, listening room, portfolio bertab, detail proyek, sertifikat, dan contact.
+
+## Website publik di GitHub Pages
+
+Repository: `https://github.com/Metsue/portofolio_indra`. Alamat publik: `https://metsue.github.io/portofolio_indra/` setelah deployment GitHub Pages berhasil. Workflow `.github/workflows/pages.yml` membangun dan menerbitkan situs pada setiap push ke `main`. Di **Settings → Pages**, sumber deployment harus **GitHub Actions**. Build lokal untuk memeriksa versi publik: `npm.cmd run build:pages`; hasil berada di `dist-pages/` dan tidak ikut masuk Git.
+
+GitHub Pages hanya melayani file statis. Karena itu versi publik menggunakan navigasi berbasis hash agar halaman detail proyek bisa dibuka ulang, contact melalui `mailto:` dan Instagram, serta panel ajakan kolaborasi sebagai pengganti guestbook Laravel. Guestbook yang menyimpan komentar tetap ada pada versi Laravel lokal; untuk mengaktifkannya di internet dibutuhkan hosting backend terpisah. Aset foto dan sertifikat di `public/assets/` memang ikut diterbitkan sebagai bagian portofolio publik.
 
 ## Buka website
 
@@ -26,7 +32,7 @@ Jangan menimpa `.env` atau membuat ulang APP_KEY pada instalasi yang sedang digu
 
 Untuk pengembangan dengan HMR, jalankan `npm.cmd run dev` lalu buka alamat Laravel di atas. Vite hanya melayani aset, bukan halaman aplikasi. Alternatif tanpa Apache: `php artisan serve --host=127.0.0.1 --port=8000`, lalu buka http://127.0.0.1:8000. Hentikan Vite ketika selesai agar Laravel kembali menggunakan hasil build.
 
-Di hosting lain, document root harus menunjuk ke `public/`, atur APP_URL sesuai domain, APP_ENV=production, APP_DEBUG=false. Jangan menyediakan root repository sebagai document root publik tanpa pembatasan. Konfigurasi root `.htaccess` saat ini khusus subfolder XAMPP ini dan menolak akses source, konfigurasi, vendor, serta storage. Aset pribadi tidak diunggah ke hosting eksternal.
+Untuk hosting Laravel dengan backend di tempat lain, document root harus menunjuk ke `public/`, atur APP_URL sesuai domain, APP_ENV=production, APP_DEBUG=false. Jangan menyediakan root repository sebagai document root publik tanpa pembatasan. Konfigurasi root `.htaccess` saat ini khusus subfolder XAMPP ini dan menolak akses source, konfigurasi, vendor, serta storage.
 
 ## Interaksi
 

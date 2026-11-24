@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import {
   BrowserRouter,
+  HashRouter,
   Routes,
   Route,
   useLocation,
@@ -18,7 +19,7 @@ import { Portfolio } from "./components/Portfolio";
 import { Contact } from "./components/Contact";
 import { DynamicInteractions, SkillsRibbon } from "./components/Interactions";
 import { ProjectDetail } from "./pages/ProjectDetail";
-import { basePath } from "./lib/runtime";
+import { basePath, runtime } from "./lib/runtime";
 function ScrollManager() {
   const { pathname, hash, key } = useLocation();
   useEffect(() => {
@@ -49,8 +50,9 @@ function Home() {
   );
 }
 export default function App() {
+  const Router = runtime.staticSite ? HashRouter : BrowserRouter;
   return (
-    <BrowserRouter basename={basePath}>
+    <Router basename={runtime.staticSite ? undefined : basePath}>
       <MotionProvider>
         <DynamicInteractions />
         <a className="skip-link" href="#main-content">
@@ -77,6 +79,6 @@ export default function App() {
         </Routes>
         <Footer />
       </MotionProvider>
-    </BrowserRouter>
+    </Router>
   );
 }

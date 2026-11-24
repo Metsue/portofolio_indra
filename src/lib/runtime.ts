@@ -5,14 +5,19 @@ declare global {
       csrf: string;
       email: string;
       mailEnabled: boolean;
+      staticSite?: boolean;
     };
   }
 }
 export const runtime = window.__PORTFOLIO__ || {
-  baseUrl: location.origin,
+  baseUrl: new URL(import.meta.env.BASE_URL, location.origin).href.replace(
+    /\/$/,
+    "",
+  ),
   csrf: "",
   email: "mhmmadindrra@gmail.com",
   mailEnabled: false,
+  staticSite: import.meta.env.VITE_STATIC_SITE === "true",
 };
 export const basePath = new URL(runtime.baseUrl).pathname.replace(/\/$/, "");
 export async function api<T>(

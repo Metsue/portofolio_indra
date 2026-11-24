@@ -26,6 +26,7 @@ export function Contact() {
   const [copied, setCopied] = useState(false);
   const endpoint = runtime.mailEnabled;
   useEffect(() => {
+    if (runtime.staticSite) return;
     api<Comment[]>("guestbook")
       .then((data) => setComments(data))
       .catch((e) => setGuestStatus(e.message));
@@ -223,96 +224,129 @@ export function Contact() {
             <InstagramLink />
           </div>
         </div>
-        <div className="guestbook-panel">
-          <div className="panel-heading">
-            <span className="icon-tile">
-              <MessageSquare size={21} />
-            </span>
-            <div>
-              <h3>Leave a little note.</h3>
-              <p>Terima kasih sudah singgah.</p>
+        {runtime.staticSite ? (
+          <div className="guestbook-panel static-contact-panel">
+            <div className="panel-heading">
+              <span className="icon-tile">
+                <MessageSquare size={21} />
+              </span>
+              <div>
+                <h3>Let's make something meaningful.</h3>
+                <p>Satu percakapan bisa jadi awal karya baru.</p>
+              </div>
+            </div>
+            <p>
+              Punya ide proyek, kolaborasi, atau sekadar ingin menyapa?
+              Ceritakan lewat email atau Instagram. Saya senang mendengar cerita
+              dan ide baru.
+            </p>
+            <div className="static-contact-actions">
+              <a className="button primary" href={`mailto:${profile.email}`}>
+                <Send size={16} /> Kirim Email
+              </a>
+              <a
+                className="button secondary"
+                href={profile.instagram}
+                target="_blank"
+                rel="noreferrer"
+              >
+                Buka Instagram
+              </a>
+            </div>
+            <span className="eyebrow">IDEAS INTO EXPERIENCES ✦</span>
+          </div>
+        ) : (
+          <div className="guestbook-panel">
+            <div className="panel-heading">
+              <span className="icon-tile">
+                <MessageSquare size={21} />
+              </span>
+              <div>
+                <h3>Leave a little note.</h3>
+                <p>Terima kasih sudah singgah.</p>
+              </div>
+            </div>
+            <p className="storage-notice">
+              <LockKeyhole size={15} />
+              Catatan tampil publik. Catatan Anda dapat dihapus selama sesi
+              browser masih aktif.
+            </p>
+            <form onSubmit={submitComment}>
+              <label htmlFor="guestName">Nama</label>
+              <input
+                id="guestName"
+                name="guestName"
+                placeholder="Siapa nama Anda?"
+                required
+                maxLength={50}
+              />
+              <label htmlFor="comment">Komentar</label>
+              <textarea
+                id="comment"
+                name="comment"
+                placeholder="Tinggalkan pesan kecil di sini…"
+                required
+                maxLength={1000}
+                rows={4}
+              />
+              <button
+                className="button primary full"
+                type="submit"
+                disabled={busy}
+              >
+                <Send size={16} />
+                Kirim Komentar
+              </button>
+              <p className="form-status" role="status">
+                {guestStatus}
+              </p>
+            </form>
+            <div className="comments-header">
+              <h4>Guestbook</h4>
+              <span>{comments.length} catatan</span>
+            </div>
+            <div className="comments-list">
+              {comments.length ? (
+                comments.map((c) => (
+                  <article className="comment" key={c.id}>
+                    <span className="comment-avatar">
+                      {c.name.charAt(0).toUpperCase()}
+                    </span>
+                    <div>
+                      <h4>{c.name}</h4>
+                      <time dateTime={c.date}>
+                        {Number.isNaN(Date.parse(c.date))
+                          ? ""
+                          : new Date(c.date).toLocaleDateString("id-ID", {
+                              day: "numeric",
+                              month: "short",
+                              year: "numeric",
+                            })}
+                      </time>
+                      <p>{c.text}</p>
+                    </div>
+                    {c.canDelete && (
+                      <button
+                        disabled={busy}
+                        aria-label={`Hapus komentar ${c.name}`}
+                        className="delete-comment"
+                        onClick={() => removeComment(c.id)}
+                      >
+                        <Trash2 size={15} />
+                      </button>
+                    )}
+                  </article>
+                ))
+              ) : (
+                <div className="guestbook-empty">
+                  <MessageSquare size={24} />
+                  <p>Jadilah yang pertama meninggalkan catatan.</p>
+                  <span>A small hello goes a long way.</span>
+                </div>
+              )}
             </div>
           </div>
-          <p className="storage-notice">
-            <LockKeyhole size={15} />
-            Catatan tampil publik. Catatan Anda dapat dihapus selama sesi
-            browser masih aktif.
-          </p>
-          <form onSubmit={submitComment}>
-            <label htmlFor="guestName">Nama</label>
-            <input
-              id="guestName"
-              name="guestName"
-              placeholder="Siapa nama Anda?"
-              required
-              maxLength={50}
-            />
-            <label htmlFor="comment">Komentar</label>
-            <textarea
-              id="comment"
-              name="comment"
-              placeholder="Tinggalkan pesan kecil di sini…"
-              required
-              maxLength={1000}
-              rows={4}
-            />
-            <button
-              className="button primary full"
-              type="submit"
-              disabled={busy}
-            >
-              <Send size={16} />
-              Kirim Komentar
-            </button>
-            <p className="form-status" role="status">
-              {guestStatus}
-            </p>
-          </form>
-          <div className="comments-header">
-            <h4>Guestbook</h4>
-            <span>{comments.length} catatan</span>
-          </div>
-          <div className="comments-list">
-            {comments.length ? (
-              comments.map((c) => (
-                <article className="comment" key={c.id}>
-                  <span className="comment-avatar">
-                    {c.name.charAt(0).toUpperCase()}
-                  </span>
-                  <div>
-                    <h4>{c.name}</h4>
-                    <time dateTime={c.date}>
-                      {Number.isNaN(Date.parse(c.date))
-                        ? ""
-                        : new Date(c.date).toLocaleDateString("id-ID", {
-                            day: "numeric",
-                            month: "short",
-                            year: "numeric",
-                          })}
-                    </time>
-                    <p>{c.text}</p>
-                  </div>
-                  {c.canDelete && (
-                    <button
-                      disabled={busy}
-                      aria-label={`Hapus komentar ${c.name}`}
-                      className="delete-comment"
-                      onClick={() => removeComment(c.id)}
-                    >
-                      <Trash2 size={15} />
-                    </button>
-                  )}
-                </article>
-              ))
-            ) : (
-              <div className="guestbook-empty">
-                <MessageSquare size={24} />
-                <p>Jadilah yang pertama meninggalkan catatan.</p>
-                <span>A small hello goes a long way.</span>
-              </div>
-            )}
-          </div>
-        </div>
+        )}
       </Reveal>
     </section>
   );

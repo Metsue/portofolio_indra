@@ -1441,6 +1441,27 @@ button:disabled {
   padding: 32px;
   background: linear-gradient(140deg, #171021bf, #0d0b16c9);
 }
+.static-contact-panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 460px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 78% 30%, #7943cf45, transparent 42%),
+    linear-gradient(145deg, #241534, #0c0a17 80%);
+}
+.static-contact-panel > p {
+  max-width: 440px;
+  color: var(--text-muted);
+  line-height: 1.85;
+}
+.static-contact-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 30px 0 55px;
+}
 .panel-heading {
   display: flex;
   align-items: center;

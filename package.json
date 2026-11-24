@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite --host 127.0.0.1",
     "build": "tsc -b && vite build",
+    "build:pages": "tsc -b && vite build --config vite.pages.config.ts && node scripts/prepare-pages.mjs",
     "preview": "php artisan serve --host=127.0.0.1 --port=8000",
     "test:browser": "node scripts/laravel-browser-qa.mjs",
     "build:xampp": "npm run build"
